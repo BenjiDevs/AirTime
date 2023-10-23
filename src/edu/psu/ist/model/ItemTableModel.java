@@ -1,18 +1,17 @@
 package edu.psu.ist.model;
 
 import javax.swing.table.AbstractTableModel;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemTableModel extends AbstractTableModel {
     private String[] columnNames = {"Name", "Category", "Price"};
     private List<Item> itemList;
 
-    public ItemTableModel(ArrayList<Item> newItemList){
-
-        itemList = newItemList = new ArrayList<>();
+    public ItemTableModel(List<Item> newItemList) {
+        this.itemList = newItemList;
     }
 
+    @Override
     public int getRowCount() {
         return itemList.size();
     }
@@ -22,17 +21,22 @@ public class ItemTableModel extends AbstractTableModel {
         return columnNames.length;
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
-        switch(col){
-            case 0: return (Object) itemList.get(row).getItemName();
-            case 1: return (Object) itemList.get(row).getItemCategory();
-            case 2: return (Object) itemList.get(row).getCost();
-            default: return null;
+        switch (col) {
+            case 0:
+                return itemList.get(row).getItemName();
+            case 1:
+                return itemList.get(row).getItemCategory();
+            case 2:
+                return itemList.get(row).getCost();
+            default:
+                return null;
         }
     }
 
-    //@Override
-    public String getColumnName(int col){
+    @Override
+    public String getColumnName(int col) {
         return columnNames[col];
     }
 }

@@ -28,6 +28,8 @@ public class ItemView {
     private JButton clearButton;
     private JButton updateButton;
     private JButton quitButton;
+    private JButton backButton;
+
     public void setAddButton(JButton addButton) {
         this.addButton = addButton;
     }
@@ -165,14 +167,38 @@ public class ItemView {
         this.itemController = itemController;
     }
 
+    public JPanel getPnlItem() {
+        return pnlItem;
+    }
+
+    public void setPnlItem(JPanel pnlItem) {
+        this.pnlItem = pnlItem;
+    }
+
+    public JButton getBackButton() {
+        return backButton;
+    }
+
+    public void setBackButton(JButton backButton) {
+        this.backButton = backButton;
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
+    }
+
     JFrame frame = new JFrame();
 
     public void createComponents() {
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setTitle("Item GUI Screen");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(myPanel); // Assuming pnlItem is a valid component.
-        this.CategoryComboBox.setModel(new DefaultComboBoxModel(Locale.Category.values())); // Assuming CategoryComboBox is a valid JComboBox.
+        frame.add(myPanel);
+        this.CategoryComboBox.setModel(new DefaultComboBoxModel(ItemCategory.values()));
         frame.setVisible(true);
     }
 
@@ -182,10 +208,16 @@ public class ItemView {
         createComponents();
     }
 
+    public ItemView(ItemController itemController, Item selectedItem) {
+        this.itemController = itemController;
+        createComponents();
+        displayItem(selectedItem);
+    }
+
     public Item createItem() {
         String name = getNameTextField().getText().trim();
         ItemCategory category = (ItemCategory) CategoryComboBox.getSelectedItem();
-        String strCost = getCostLabel().getText();
+        String strCost = getCostTextField().getText(); // Change to getCostTextField()
         double cost = 0;
         try {
             cost = Double.parseDouble(strCost);
@@ -196,6 +228,7 @@ public class ItemView {
         Item item = new Item(name, category, cost);
         return item;
     }
+
 
     public void displayItem(@NotNull Item item) {
         this.NameTextField.setText(item.getItemName());
@@ -210,4 +243,11 @@ public class ItemView {
     }
 
     public void setDisplayMessage(String m) {this.errorDisplay.setText(m);}
+
+    public void dispose() {
+        if (frame != null) {
+            frame.dispose();
+        }
+    }
+
 }

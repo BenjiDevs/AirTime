@@ -26,8 +26,13 @@ public class ListController implements ActionListener {
         //this.itemTableModel
     }
 
-    public ItemTableModel getItemTableModel() {return itemTableModel;}
-    public List<Item> getItems() {return items;}
+    public ItemTableModel getItemTableModel() {
+        return itemTableModel;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
 
     public void createInitialElements() {
         Item item1 = new Item("list item1", ItemCategory.FOOD, 20.99);
@@ -47,22 +52,23 @@ public class ListController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        /*
+
         if (e.getSource() == listView.getBtnNew()) {
-            ItemController(listController) {
+            listView.dispose();
+            int lastRow = listView.getTblItem().getRowCount() - 1;
+            this.itemController = new ItemController(this, lastRow);
 
-            }
-            //instantiate InstrumentController without the selectedRow
-            //it may require new constructor in InstrumentController that accepts ListController as a parameter
-            //make sure to clear the fields on the details view
         }
+        //instantiate InstrumentController without the selectedRow
+        //it may require new constructor in InstrumentController that accepts ListController as a parameter
+        //make sure to clear the fields on the details view
 
-         */
+
         if (e.getSource() == listView.getBtnDetail()) {
             listView.dispose();
             //find the selected row
             int selectedRow = listView.getTblItem().getSelectedRow();
-            System.out.println("selectedRow = " +selectedRow);
+            System.out.println("selectedRow = " + selectedRow);
             //if no row is selected on the list, set it to show first element on the details view
             //show a detail view with the data for the selected element
             //pass the flow from list controller to details controller
@@ -75,6 +81,8 @@ public class ListController implements ActionListener {
 
 
     }
+
+
 
     public void showListView() {this.listView.setVisible(true);}
 

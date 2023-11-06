@@ -17,13 +17,14 @@ public class ListController implements ActionListener {
     List<Item> items = new ArrayList<>();
     ItemController itemController;
     ItemTableModel itemTableModel;
+    ItemPersistenceController itemPersistenceController;
 
     public ListController() {
-        createInitialElements();
+        this.itemPersistenceController = new ItemPersistenceController();
+        items = itemPersistenceController.getItems();
         this.itemTableModel = new ItemTableModel(items);
         this.listView = new ListView(this);
         addActionListeners();
-        //this.itemTableModel
     }
 
     public ItemTableModel getItemTableModel() {
@@ -48,6 +49,7 @@ public class ListController implements ActionListener {
         listView.getBtnNew().addActionListener(this);
         listView.getBtnDetail().addActionListener(this);
         listView.getBtnDone().addActionListener(this);
+        listView.getBtnTransaction().addActionListener(this);
     }
 
     @Override
@@ -68,15 +70,29 @@ public class ListController implements ActionListener {
             listView.dispose();
             //find the selected row
             int selectedRow = listView.getTblItem().getSelectedRow();
-            System.out.println("selectedRow = " + selectedRow);
-            //if no row is selected on the list, set it to show first element on the details view
-            //show a detail view with the data for the selected element
-            //pass the flow from list controller to details controller
-            //do not instantiate the details view from this list controller
-            this.itemController = new ItemController(this, selectedRow);
+            if (selectedRow >= 0 && selectedRow < items.size()) {
+                System.out.println("selectedRow = " + selectedRow);
+                this.itemController = new ItemController(this, selectedRow);
+            } else {
+                // Handle the case when no row is selected or the selected row is out of bounds.
+            }
         }
         if (e.getSource() == listView.getBtnDone()) {
             listView.dispose();
+        }
+
+        // transaction details list
+        if (e.getSource() == listView.getBtnTransaction()) {
+            int selectedRow = listView.getTblItem().getSelectedRow();
+            if (selectedRow > -1) {
+                listView.dispose();
+                Item selectedItem = items.get(selectedRow);
+                TransactionController transactionController = new TransactionController(selectedItem);
+            }
+            else {
+                System.out.println("Please select an Item first");
+            }
+
         }
 
 

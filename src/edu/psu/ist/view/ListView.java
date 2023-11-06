@@ -15,6 +15,7 @@ public class ListView extends JFrame {
     private JButton btnNew;
     private JButton btnDetail;
     private JButton btnDone;
+    private JButton btnTransaction;
     private static final int FRAME_WIDTH = 500;
     private static final int FRAME_HEIGHT = 600;
 
@@ -100,6 +101,10 @@ public class ListView extends JFrame {
 
     public JButton getBtnDone() {
         return btnDone;
+    }
+
+    public JButton getBtnTransaction() {
+        return btnTransaction;
     }
 
     public void setBtnDone(JButton btnDone) {

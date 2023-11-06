@@ -1,6 +1,8 @@
 package edu.psu.ist.model;
 
-public class Item extends Expense{
+import java.io.Serializable;
+
+public class Item extends Expense implements Printable, Serializable {
     private String itemName;
     private ItemCategory itemCategory;
 
@@ -47,5 +49,15 @@ public class Item extends Expense{
                 ", itemCategory=" + itemCategory +
                 ", itemCost=" + cost +
                 '}';
+    }
+
+    @Override
+    public void printSetup() {
+
+    }
+
+    @Override
+    public void print() {
+
     }
 }
